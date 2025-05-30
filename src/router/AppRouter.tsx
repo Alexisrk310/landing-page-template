@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import HomePage from '@/pages/HomePage';
 import NotFoundPage from '@/pages/NotFoundPage';
@@ -9,9 +10,9 @@ function AppRouter() {
 			<Navbar />
 			<Routes>
 				<Route path="/" element={<HomePage />} />
-
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
+			<Footer />
 		</BrowserRouter>
 	);
 }
