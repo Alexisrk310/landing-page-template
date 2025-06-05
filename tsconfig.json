@@ -4,8 +4,10 @@
     "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "declaration": false
   },
+  
   "include": ["src"],
   "files": [],
   "references": [
