@@ -1,4 +1,3 @@
-import React from "react";
 import { BeefIcon, HamburgerIcon, Pizza } from "lucide-react";
 import HotDogIcon from "@/components/HotDogIcon";
 import ArepaIcon from "@/components/ArepaIcon";
