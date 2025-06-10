@@ -1,8 +1,7 @@
-import React from "react";
 import { Flame, Utensils, Heart, Eye, Plane } from "lucide-react";
 import CardInfo from "@/components/CardInfo";
 import CardInfoAnimate from "@/components/CardInfoAnimate";
-import { title } from "process";
+
 const info = [
   {
     icon: <Flame className="w-12 h-12 mx-auto text-red-600" />,
@@ -43,7 +42,7 @@ const companyInfo = [
       "Compromiso con la calidad, pasión por la cocina, respeto por nuestros clientes y un enfoque en la sostenibilidad.",
   },
 ];
-const AboutUs = () => {
+const AboutUsPage = () => {
   return (
     <div className="w-7xl mx-auto  bg-white text-gray-800 px-6 py-12">
       <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -94,4 +93,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default AboutUsPage;
