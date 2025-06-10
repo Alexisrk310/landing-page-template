@@ -25,11 +25,8 @@ const MenuItem: React.FC<Props> = ({ data }) => {
     .filter(Boolean) as PinProps[];
 
   return (
-    <div className="bg-white min-h-screen py-10 px-4 text-gray-900">
-      <h1 className="text-4xl font-bold mb-2 text-green-600 text-center">Menú</h1>
-      <p className="text-gray-600 mb-6 text-center">
-        Explora nuestras deliciosas categorías
-      </p>
+    <div className="bg-white min-h-screen pb-10 px-4 text-gray-900">
+      
 
       {/* Input de búsqueda */}
       <div className="mb-6 max-w-xl mx-auto">

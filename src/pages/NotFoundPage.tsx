@@ -5,7 +5,7 @@ import { MoveRight } from "lucide-react";
 
 const NotFoundPage = () => {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-600 flex flex-col items-center justify-center text-white px-4 relative overflow-hidden">
       {/* Fondo animado */}
       <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-red-600 via-black to-teal-700 animate-pulse" />
 

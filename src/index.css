@@ -1,7 +1,7 @@
 :root {
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
-@import 'tailwindcss';
+@import "tailwindcss";
 /* @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
@@ -15,14 +15,62 @@
 	}
 } */
 @layer utilities {
-	.mask-egg {
-		mask-image: url('/figures/egg-shape.svg');
-		mask-size: cover;
-		mask-repeat: no-repeat;
-		mask-position: center;
-		-webkit-mask-image: url('/figures/egg-shape.svg');
-		-webkit-mask-size: cover;
-		-webkit-mask-repeat: no-repeat;
-		-webkit-mask-position: center;
-	}
+  .mask-egg {
+    mask-image: url("/figures/egg-shape.svg");
+    mask-size: cover;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("/figures/egg-shape.svg");
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+}
+
+/* Animacion CardInfoAnimate */
+/* ANIMATION HORIZONTAL */
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-border-top {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(
+    270deg,
+    #ccfbf1,
+    #a5f3fc,
+    #5eead4,
+    #2dd4bf,
+    #14b8a6,
+    #0f766e,
+    #fee2e2,
+    #fecaca,
+    #fca5a5,
+    #f87171,
+    #ef4444,
+    #dc2626,
+    #b91c1c,
+    #991b1b
+  );
+
+  background-size: 400% 400%;
+  animation: gradient-move 3s linear infinite;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  z-index: 10;
 }
