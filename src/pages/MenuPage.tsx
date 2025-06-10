@@ -5,7 +5,7 @@ import { pins } from "@/data/foods/foodsData";
 import MenuItem from "@/components/MenuItem";
 import type { PinProps } from "@/interfaces/foods.Interface";
 
-export default function MenuConModal() {
+export default function MenuPage() {
   const [selectedPin, setSelectedPin] = useState<PinProps | null>(null);
   const scrollMenu = useRef<HTMLDivElement>(null);
   function scrollToBottom(seccionRef: any) {

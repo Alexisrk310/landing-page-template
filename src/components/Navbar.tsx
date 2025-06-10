@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { X, Menu } from "lucide-react";
+import FloatingCartButton from "./FloatingCartButton";
 
 const navLinks = [
   { name: "Inicio", path: "/" },
@@ -38,13 +39,8 @@ export default function Navbar() {
           </li>
         ))}
         <div className="hidden md:block">
-          <Link
-            to="https://wa.me/+573032345678?text=Hola%20Rafa%20Express,%20me%20gustaría%20cotizar%20un%20pedido."
-            target="_blank"
-            className="bg-teal-700 text-white font-semibold px-4 py-1.5 rounded-full hover:bg-teal-800 transition"
-          >
-            Cotizar
-          </Link>
+        
+		  <FloatingCartButton />
         </div>
       </ul>
 
@@ -83,14 +79,15 @@ export default function Navbar() {
                 </NavLink>
               </li>
             ))}
-            <Link
+            {/* <Link
               to="https://wa.me/+573032345678?text=Hola%20Rafa%20Express,%20me%20gustaría%20cotizar%20un%20pedido."
               target="_blank"
               onClick={() => setIsOpen(false)}
               className="bg-teal-700 text-white px-6 py-2 rounded-full"
             >
               Cotizar
-            </Link>
+            </Link> */}
+			<FloatingCartButton />
           </ul>
         </div>
       )}

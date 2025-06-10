@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import AboutUsPage from '@/pages/AboutUsPage';
+import CartPage from '@/pages/CartPage';
 import ContactPage from '@/pages/ContactPage';
 import GalleryPage from '@/pages/GalleryPage';
 import HomePage from '@/pages/HomePage';
@@ -18,6 +19,7 @@ function AppRouter() {
 				<Route path="/acerca-de-nosotros" element={<AboutUsPage />} />
 				<Route path="/galeria" element={<GalleryPage />} />
 				<Route path="/contacto" element={<ContactPage />} />
+				<Route path="/cart" element={<CartPage />} />
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 			<Footer />
