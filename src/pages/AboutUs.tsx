@@ -26,19 +26,19 @@ const info = [
 const companyInfo = [
   {
     title: "Visión",
-    icon: <Eye className="w-12 h-12 mx-auto text-red-600" />,
+    icon: <Eye className="w-12 h-12 mx-auto text-teal-700" />,
     description:
       "Ser el restaurante de comida rápida más querido por su calidad y servicio, fusionando tradición y modernidad en cada plato.",
   },
   {
     title: "Misión",
-    icon: <Plane  className="w-12 h-12 mx-auto text-teal-700" />,
+    icon: <Plane  className="w-12 h-12 mx-auto text-red-600" />,
     description:
       "Ofrecer una experiencia gastronómica única, donde cada bocado sea una explosión de sabor y cada visita sea memorable.",
   },
   {
     title: "Valores",
-    icon: <Heart className="w-12 h-12 mx-auto text-red-600" />,
+    icon: <Heart className="w-12 h-12 mx-auto text-teal-700" />,
     description:
       "Compromiso con la calidad, pasión por la cocina, respeto por nuestros clientes y un enfoque en la sostenibilidad.",
   },
