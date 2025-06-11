@@ -44,7 +44,7 @@ const companyInfo = [
 ];
 const AboutUsPage = () => {
   return (
-    <div className="w-7xl mx-auto  bg-white text-gray-800 px-6 py-12">
+    <div className="maxw-7xl mx-auto  bg-white text-gray-800 px-6 py-12">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <h1 className="text-5xl font-bold tracking-tight">
           <span className="text-teal-700">Acerca de </span>
