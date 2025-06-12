@@ -1,5 +1,3 @@
-
-
 interface FoodCardProps {
 	imageSrc: string;
 	title: string;
@@ -12,16 +10,17 @@ const FoodCard: React.FC<FoodCardProps> = ({
 	description,
 }) => {
 	return (
-		<div className="flex flex-col items-center text-center max-w-sm mx-auto">
-			<div className="w-60 h-60 mb-4">
-				<img
-					src={imageSrc}
-					alt={title}
-					className="w-full h-full object-cover mask-egg"
-				/>
+		<div className="flex flex-col items-center text-center max-w-sm mx-auto rounded-2xl shadow-md hover:shadow-lg transition duration-300 border border-stone-200">
+			<img
+				src={imageSrc}
+				alt={title}
+				className="w-full h-56 object-cover rounded-t-2xl"
+			/>
+
+			<div className="p-5 border-t border-stone-100">
+				<h3 className="text-xl font-semibold text-amber-900 mb-2">{title}</h3>
+				<p className="text-sm text-stone-600">{description}</p>
 			</div>
-			<h3 className="text-xl font-semibold text-gray-800">{title}</h3>
-			<p className="text-sm text-gray-600 mt-2">{description}</p>
 		</div>
 	);
 };

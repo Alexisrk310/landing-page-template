@@ -7,7 +7,8 @@ export interface HeroProps {
 	reversed?: boolean;
 	color?: HeroColor;
 	highlight?: string;
-	buttonLabel: string;
+	buttonLabel?: string;
 	imageUrl: string;
 	phoneNumber?: string;
+	onClick?: () => void;
 }

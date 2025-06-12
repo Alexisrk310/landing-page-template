@@ -39,8 +39,7 @@ export default function Navbar() {
           </li>
         ))}
         <div className="hidden md:block">
-        
-		  <FloatingCartButton />
+          <FloatingCartButton />
         </div>
       </ul>
 
@@ -63,29 +62,28 @@ export default function Navbar() {
           >
             <X size={28} />
           </button>
-        <ul className="w-full flex flex-col items-center space-y-6 text-lg font-semibold">
-  {navLinks.map((link) => (
-    <li key={link.name}>
-      <NavLink
-        to={link.path}
-        onClick={() => setIsOpen(false)}
-        className={({ isActive }) =>
-          isActive
-            ? "text-teal-700 font-bold"
-            : "text-gray-800 hover:text-teal-700"
-        }
-      >
-        {link.name}
-      </NavLink>
-    </li>
-  ))}
+          <ul className="w-full flex flex-col items-center space-y-6 text-lg font-semibold">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <NavLink
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-teal-700 font-bold"
+                      : "text-gray-800 hover:text-teal-700"
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              </li>
+            ))}
 
-  {/* Botón de carrito con cierre de menú */}
-  <div onClick={() => setIsOpen(false)}>
-    <FloatingCartButton />
-  </div>
-</ul>
-
+            {/* Botón de carrito con cierre de menú */}
+            <div onClick={() => setIsOpen(false)}>
+              <FloatingCartButton />
+            </div>
+          </ul>
         </div>
       )}
     </nav>

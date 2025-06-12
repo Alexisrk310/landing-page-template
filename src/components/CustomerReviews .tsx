@@ -62,7 +62,7 @@ const CustomerReviews = () => {
 	const currentReview = reviews[currentReviewIndex];
 
 	return (
-		<section className="bg-green-100 py-16 px-4 md:px-8 lg:px-16 relative overflow-hidden">
+		<section className="bg-teal-100 py-16 px-4 md:px-8 lg:px-16 relative overflow-hidden">
 			{/* Ondas decorativas (background waves) */}
 			{/* Puedes ajustar los SVG y los colores para que coincidan con tu diseño */}
 
