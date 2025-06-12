@@ -43,10 +43,7 @@ const MenuItem: React.FC<Props> = ({ data }) => {
 
   useEffect(() => {
     if (selectedProducts.length > 0) {
-      const interval = setInterval(() => {
-        setShowOrderTip((prev) => !prev);
-      }, 5000);
-      return () => clearInterval(interval);
+    setShowOrderTip((prev) => !prev);
     }
   }, [selectedProducts]);
 
@@ -191,14 +188,16 @@ const MenuItem: React.FC<Props> = ({ data }) => {
 
       {/* Tooltip de selección múltiple */}
       {multiSelect && (
-        <div className="text-center mb-4">
-          <p className="text-sm text-gray-700 bg-yellow-100 border border-yellow-200 inline-block px-4 py-2 rounded-full flex items-center gap-2">
-            Selección múltiple activada – haz clic en los productos que deseas
-            agregar.
-            <ChevronDown className="animate-bounce" />
-            <ChevronDown className="animate-bounce delay-100" />
-          </p>
-        </div>
+       <div className="text-center mb-4">
+        
+  <p className="text-sm text-gray-700 bg-yellow-100 border border-yellow-200 inline-flex items-center gap-2 px-4 py-2 rounded-full">
+    <ChevronDown className="animate-bounce delay-100" />
+    <span>Selección múltiple activada – haz clic en los productos que deseas agregar.</span>
+    <ChevronDown className="animate-bounce" />
+    
+  </p>
+</div>
+
       )}
 
       {/* Grid de productos */}
