@@ -13,6 +13,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
+import ScrollToTopButton from "./ScrollToTopButton";
 
 interface Props {
   data: PinProps[];
@@ -43,7 +44,7 @@ const MenuItem: React.FC<Props> = ({ data }) => {
 
   useEffect(() => {
     if (selectedProducts.length > 0) {
-    setShowOrderTip((prev) => !prev);
+      setShowOrderTip((prev) => !prev);
     }
   }, [selectedProducts]);
 
@@ -188,16 +189,16 @@ const MenuItem: React.FC<Props> = ({ data }) => {
 
       {/* Tooltip de selección múltiple */}
       {multiSelect && (
-       <div className="text-center mb-4">
-        
-  <p className="text-sm text-gray-700 bg-yellow-100 border border-yellow-200 inline-flex items-center gap-2 px-4 py-2 rounded-full">
-    <ChevronDown className="animate-bounce delay-100" />
-    <span>Selección múltiple activada – haz clic en los productos que deseas agregar.</span>
-    <ChevronDown className="animate-bounce" />
-    
-  </p>
-</div>
-
+        <div className="text-center mb-4">
+          <p className="text-sm text-gray-700 bg-yellow-100 border border-yellow-200 inline-flex items-center gap-2 px-4 py-2 rounded-full">
+            <ChevronDown className="animate-bounce delay-100" />
+            <span>
+              Selección múltiple activada – haz clic en los productos que deseas
+              agregar.
+            </span>
+            <ChevronDown className="animate-bounce" />
+          </p>
+        </div>
       )}
 
       {/* Grid de productos */}
@@ -280,7 +281,7 @@ const MenuItem: React.FC<Props> = ({ data }) => {
           )
         )}
       </div>
-
+      {!multiSelect && <ScrollToTopButton />}
       {/* Botón flotante del carrito y tooltip */}
       {multiSelect && selectedProducts.length > 0 && (
         <div>
@@ -317,7 +318,7 @@ const MenuItem: React.FC<Props> = ({ data }) => {
               onClick={() => setShowCart(false)}
               className="absolute top-2 right-2  hover:text-black text-3xl font-bold border border-white bg-gray-900 text-white w-8 h-8 rounded-full shadow-md"
             >
-              <X className="w-full"/>
+              <X className="w-full" />
             </button>
             <h2 className="text-xl font-bold mb-4">Productos seleccionados</h2>
             <ul className="mb-4 max-h-60 overflow-auto">

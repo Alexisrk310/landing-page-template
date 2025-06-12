@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
 	return (
 		<footer className="bg-teal-700 text-white py-10 px-6">
@@ -15,32 +17,36 @@ const Footer = () => {
 					<h3 className="text-lg font-semibold text-white mb-4">Enlaces</h3>
 					<ul className="space-y-2 text-sm">
 						<li>
-							<a
-								href="#"
-								className="text-gray-100 hover:text-red-400 transition">
+							<Link
+								to="/"
+								className="text-gray-100 hover:text-red-400 transition"
+							>
 								Inicio
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a
-								href="#"
-								className="text-gray-100 hover:text-red-400 transition">
+							<Link
+								to="/menu"
+								className="text-gray-100 hover:text-red-400 transition"
+							>
 								Menú
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a
-								href="#"
-								className="text-gray-100 hover:text-red-400 transition">
+							<Link
+								to="/galeria"
+								className="text-gray-100 hover:text-red-400 transition"
+							>
 								Galería
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a
-								href="#"
-								className="text-gray-100 hover:text-red-400 transition">
+							<Link
+								to="/contacto"
+								className="text-gray-100 hover:text-red-400 transition"
+							>
 								Contacto
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</div>
@@ -55,9 +61,11 @@ const Footer = () => {
 						</a>
 					</p>
 					<p className="text-sm text-gray-100">Pide tu comida favorita</p>
-					<button className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
-						Cotiza tu pedido
-					</button>
+					<Link to="/menu">
+						<button className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+							Cotiza tu pedido
+						</button>
+					</Link>
 				</div>
 			</div>
 
