@@ -63,32 +63,29 @@ export default function Navbar() {
           >
             <X size={28} />
           </button>
-          <ul className="w-full flex flex-col items-center space-y-6 text-lg font-semibold">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <NavLink
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-teal-700 font-bold"
-                      : "text-gray-800 hover:text-teal-700"
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
-            {/* <Link
-              to="https://wa.me/+573032345678?text=Hola%20Rafa%20Express,%20me%20gustaría%20cotizar%20un%20pedido."
-              target="_blank"
-              onClick={() => setIsOpen(false)}
-              className="bg-teal-700 text-white px-6 py-2 rounded-full"
-            >
-              Cotizar
-            </Link> */}
-			<FloatingCartButton />
-          </ul>
+        <ul className="w-full flex flex-col items-center space-y-6 text-lg font-semibold">
+  {navLinks.map((link) => (
+    <li key={link.name}>
+      <NavLink
+        to={link.path}
+        onClick={() => setIsOpen(false)}
+        className={({ isActive }) =>
+          isActive
+            ? "text-teal-700 font-bold"
+            : "text-gray-800 hover:text-teal-700"
+        }
+      >
+        {link.name}
+      </NavLink>
+    </li>
+  ))}
+
+  {/* Botón de carrito con cierre de menú */}
+  <div onClick={() => setIsOpen(false)}>
+    <FloatingCartButton />
+  </div>
+</ul>
+
         </div>
       )}
     </nav>
