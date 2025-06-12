@@ -11,6 +11,7 @@ declare global {
 
 interface CheckoutBrickProps {
   preferenceId: string;
+  amount: number; // ya no es opcional
 }
 
 interface MercadoPagoInstance {
@@ -21,8 +22,14 @@ interface MercadoPagoInstance {
       settings: {
         initialization: {
           preferenceId: string;
+          amount: number; // ✅ necesario para Bricks
         };
         customization?: {
+          paymentMethods?: {
+            creditCard?: "all" | "none";
+            debitCard?: "all" | "none";
+            ticket?: "all" | "none";
+          };
           visual?: {
             style?: {
               theme?: string;
@@ -39,36 +46,34 @@ interface MercadoPagoInstance {
   };
 }
 
-export default function CheckoutBrick({ preferenceId }: CheckoutBrickProps) {
+
+export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickProps) {
   useEffect(() => {
-    const mp = new window.MercadoPago("APP_USR-02fd49e6-2f7a-4c81-a551-59408b86eefe", {
-      locale: "es-CO", // cambia según tu país
+    const mp = new window.MercadoPago("TU_PUBLIC_KEY", {
+      locale: "es-CO",
     });
 
     mp.bricks().create("payment", "payment-container", {
       initialization: {
         preferenceId,
+        amount, 
       },
       customization: {
-        visual: {
-          style: {
-            theme: "default", // o "dark", "flat", etc.
-          },
+        paymentMethods: {
+          creditCard: "all",
+          debitCard: "all",
+          ticket: "all",
         },
       },
       callbacks: {
-        onReady: () => {
-          console.log("Brick listo");
+        onReady: () => console.log("Brick listo"),
+        onSubmit: (params) => {
+          console.log("Datos del formulario:", params.formData);
         },
-        onSubmit: ({ formData }) => {
-          console.log("Datos enviados:", formData);
-        },
-        onError: (error) => {
-          console.error("Error con el Brick:", error);
-        },
+        onError: (error) => console.error("Error en el brick:", error),
       },
     });
-  }, [preferenceId]);
+  }, [preferenceId, amount]);
 
   return <div id="payment-container" />;
 }
