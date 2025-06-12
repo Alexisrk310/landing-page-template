@@ -143,7 +143,10 @@ const CartPage: React.FC = () => {
               {isPaying ? "Cargando..." : "Pagar con Mercado Pago"}
             </button>
 
-            {preferenceId && <CheckoutBrick preferenceId={preferenceId} />}
+           {preferenceId && (
+  <CheckoutBrick preferenceId={preferenceId} amount={totalPrice} />
+)}
+
 
             <br />
             <button

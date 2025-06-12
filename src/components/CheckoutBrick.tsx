@@ -29,6 +29,7 @@ interface MercadoPagoInstance {
             creditCard?: "all" | "none";
             debitCard?: "all" | "none";
             ticket?: "all" | "none";
+            bankTransfer?: "all" | "none";
           };
           visual?: {
             style?: {
@@ -47,33 +48,49 @@ interface MercadoPagoInstance {
 }
 
 
-export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickProps) {
-  useEffect(() => {
-    const mp = new window.MercadoPago("APP_USR-02fd49e6-2f7a-4c81-a551-59408b86eefe", {
-      locale: "es-CO",
-    });
 
-    mp.bricks().create("payment", "payment-container", {
-      initialization: {
-        preferenceId,
-        amount, 
-      },
-      customization: {
-        paymentMethods: {
-          creditCard: "all",
-          debitCard: "all",
-          ticket: "all",
+const CheckoutBrick = ({ preferenceId, amount }: { preferenceId: string; amount: number }) => {
+  useEffect(() => {
+    const renderBrick = async () => {
+      if (!window.MercadoPago) return;
+
+      const mp = new window.MercadoPago("TU_PUBLIC_KEY", {
+        locale: "es-CO",
+      });
+
+      const bricksBuilder = mp.bricks();
+
+      await bricksBuilder.create("payment", "paymentBrick_container", {
+        initialization: {
+          amount: amount, // ✅ OBLIGATORIO para Checkout Bricks
+          preferenceId: preferenceId,
         },
-      },
-      callbacks: {
-        onReady: () => console.log("Brick listo"),
-        onSubmit: (params) => {
-          console.log("Datos del formulario:", params.formData);
+        customization: {
+          paymentMethods: {
+            ticket: "all",
+            bankTransfer: "all",
+            creditCard: "all",
+            debitCard: "all",
+          },
         },
-        onError: (error) => console.error("Error en el brick:", error),
-      },
-    });
+        callbacks: {
+          onReady: () => {
+            console.log("Checkout Bricks listo");
+          },
+          onSubmit: (formData) => {
+            console.log("Datos enviados:", formData);
+          },
+          onError: (error) => {
+            console.error("Error en Brick:", error);
+          },
+        },
+      });
+    };
+
+    renderBrick();
   }, [preferenceId, amount]);
 
-  return <div id="payment-container" />;
-}
+  return <div id="paymentBrick_container" className="mt-6" />;
+};
+
+export default CheckoutBrick;
