@@ -10,6 +10,7 @@ interface CartItem {
 
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isPaying, setIsPaying] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("cart");
@@ -27,6 +28,30 @@ const CartPage: React.FC = () => {
     localStorage.removeItem("cart");
     setCartItems([]);
   };
+
+  const handleCheckout = async () => {
+  try {
+    const response = await fetch("https://mercado-pago-backend-six.vercel.app/api/create-preference", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ items: cartItems }),
+    });
+
+    const data = await response.json();
+
+    if (data.init_point) {
+      window.location.href = data.init_point;
+    } else {
+      alert("Error al crear la preferencia de pago.");
+    }
+  } catch (error) {
+    console.error("Error en checkout:", error);
+    alert("Hubo un problema al procesar el pago.");
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-white text-gray-900 px-4 py-8 max-w-4xl mx-auto">
@@ -60,20 +85,27 @@ const CartPage: React.FC = () => {
                   <span className="font-medium">{item.quantity}</span>
                 </p>
                 <p className="text-sm mt-1 text-gray-800 font-semibold">
-                  Subtotal: $
-                  {(item.price * item.quantity).toLocaleString()}
+                  Subtotal: ${ (item.price * item.quantity).toLocaleString() }
                 </p>
               </div>
             </div>
           ))}
 
-          <div className="text-right mt-6">
+          <div className="text-right mt-6 space-y-4">
             <p className="text-xl font-bold text-green-700">
               Total: ${totalPrice.toLocaleString()}
             </p>
             <button
+              onClick={handleCheckout}
+              disabled={isPaying}
+              className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+            >
+              {isPaying ? "Redirigiendo..." : "Pagar con Mercado Pago"}
+            </button>
+            <br />
+            <button
               onClick={clearCart}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
             >
               Vaciar carrito
             </button>

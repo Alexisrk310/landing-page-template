@@ -192,11 +192,11 @@ const MenuItem: React.FC<Props> = ({ data }) => {
       {/* Tooltip de selección múltiple */}
       {multiSelect && (
         <div className="text-center mb-4">
-          <p className="text-sm text-gray-700 bg-yellow-100 border border-yellow-200 inline-block px-4 py-2 rounded-full  items-center gap-2">
+          <p className="text-sm text-gray-700 bg-yellow-100 border border-yellow-200 inline-block px-4 py-2 rounded-full flex items-center gap-2">
             Selección múltiple activada – haz clic en los productos que deseas
             agregar.
             <ChevronDown className="animate-bounce" />
-            <ChevronDown className="animate-bounce delay-100 inline" />
+            <ChevronDown className="animate-bounce delay-100" />
           </p>
         </div>
       )}
