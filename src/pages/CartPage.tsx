@@ -49,37 +49,38 @@ const CartPage: React.FC = () => {
   );
 
   const handleCheckoutBricks = async () => {
-    setIsPaying(true);
-    try {
-      const response = await fetch(
-        "https://mercado-pago-backend-six.vercel.app/api/create-preference",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            items: cartItems.map((item) => ({
-              title: item.name,
-              quantity: item.quantity,
-              unit_price: item.price,
-              currency_id: "COP",
-            })),
-          }),
-        }
-      );
+  setIsPaying(true);
+  try {
+    // Enviar al backend con los campos que Mercado Pago espera
+    const items = cartItems.map(item => ({
+      title: item.name,
+      quantity: item.quantity,
+      unit_price: item.price,
+      currency_id: "COP",
+    }));
 
-      const data = await response.json();
-      if (data.preference_id) {
-        setPreferenceId(data.preference_id);
-      } else {
-        alert("Error al crear la preferencia.");
+    const response = await fetch(
+      "https://mercado-pago-backend-six.vercel.app/api/create-preference",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
       }
-    } catch (error) {
-      console.error("Error en checkout:", error);
-      alert("Hubo un problema al procesar el pago.");
-    } finally {
-      setIsPaying(false);
+    );
+
+    const data = await response.json();
+    if (data.preference_id) {
+      setPreferenceId(data.preference_id);
+    } else {
+      alert("Error al crear la preferencia.");
     }
-  };
+  } catch (error) {
+    console.error("Error en checkout:", error);
+    alert("Hubo un problema al procesar el pago.");
+  } finally {
+    setIsPaying(false);
+  }
+};
 
   return (
     <div className="min-h-screen text-gray-900 px-4 py-8 max-w-4xl mx-auto">
