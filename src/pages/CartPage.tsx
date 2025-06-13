@@ -153,7 +153,7 @@ const CartPage: React.FC = () => {
               <h2 className="text-xl font-bold text-center text-emerald-800 mb-4">
                 Completa tu pago
               </h2>
-              <CheckoutBrick preferenceId={preferenceId} amount={totalPrice} />
+              <CheckoutBrick preferenceId={preferenceId}  />
             </div>
           )}
 
