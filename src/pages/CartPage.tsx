@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Minus, Plus, XCircle } from "lucide-react";
 import CheckoutBrick from "@/components/CheckoutBrick";
 
-
 interface CartItem {
   category: string;
   name: string;
@@ -52,11 +51,21 @@ const CartPage: React.FC = () => {
   const handleCheckoutBricks = async () => {
     setIsPaying(true);
     try {
-      const response = await fetch("https://mercado-pago-backend-six.vercel.app/api/create-preference", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cartItems }),
-      });
+      const response = await fetch(
+        "https://mercado-pago-backend-six.vercel.app/api/create-preference",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: cartItems.map((item) => ({
+              title: item.name,
+              quantity: item.quantity,
+              unit_price: item.price,
+              currency_id: "COP",
+            })),
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.preference_id) {
@@ -83,7 +92,10 @@ const CartPage: React.FC = () => {
       ) : (
         <div className="space-y-6">
           {cartItems.map((item, i) => (
-            <div key={i} className="relative border rounded-lg p-4 shadow-sm bg-white">
+            <div
+              key={i}
+              className="relative border rounded-lg p-4 shadow-sm bg-white"
+            >
               <button
                 onClick={() => removeItem(i)}
                 className="absolute top-2 right-2 text-red-500 hover:text-red-700"
@@ -143,10 +155,9 @@ const CartPage: React.FC = () => {
               {isPaying ? "Cargando..." : "Pagar con Mercado Pago"}
             </button>
 
-           {preferenceId && (
-  <CheckoutBrick preferenceId={preferenceId} amount={totalPrice} />
-)}
-
+            {preferenceId && (
+              <CheckoutBrick preferenceId={preferenceId} amount={totalPrice} />
+            )}
 
             <br />
             <button
@@ -158,13 +169,35 @@ const CartPage: React.FC = () => {
           </div>
 
           <div className="mt-10 text-center">
-            <p className="text-md font-medium mb-2 text-gray-700">Puedes pagar con:</p>
+            <p className="text-md font-medium mb-2 text-gray-700">
+              Puedes pagar con:
+            </p>
             <div className="flex flex-wrap justify-center items-center gap-4">
-              <img src="/paymentMethods/mercado-pago-logo.jpg" alt="MercadoPago" className="h-15" />
-              <img src="/paymentMethods/visa-logo.png" alt="Visa" className="h-15" />
-              <img src="/paymentMethods/mastercard-logo.png" alt="MasterCard" className="h-15" />
-              <img src="/paymentMethods/efecty-logo.svg" alt="Efecty" className="h-15" />
-              <img src="/paymentMethods/pse-logo.png" alt="PSE" className="h-15" />
+              <img
+                src="/paymentMethods/mercado-pago-logo.jpg"
+                alt="MercadoPago"
+                className="h-15"
+              />
+              <img
+                src="/paymentMethods/visa-logo.png"
+                alt="Visa"
+                className="h-15"
+              />
+              <img
+                src="/paymentMethods/mastercard-logo.png"
+                alt="MasterCard"
+                className="h-15"
+              />
+              <img
+                src="/paymentMethods/efecty-logo.svg"
+                alt="Efecty"
+                className="h-15"
+              />
+              <img
+                src="/paymentMethods/pse-logo.png"
+                alt="PSE"
+                className="h-15"
+              />
             </div>
           </div>
         </div>
