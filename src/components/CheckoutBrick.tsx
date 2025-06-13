@@ -35,6 +35,7 @@ interface MercadoPagoInstance {
           excludedPaymentMethods?: any[];
           excludedPaymentTypes?: any[];
           defaultPaymentMethod?: string;
+          
         };
         callbacks?: {
           onReady?: () => void;
@@ -48,7 +49,7 @@ interface MercadoPagoInstance {
 
 export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickProps) {
   useEffect(() => {
-    const mp = new window.MercadoPago("APP_USR-02fd49e6-2f7a-4c81-a551-59408b86eefe", {
+    const mp = new window.MercadoPago("APP_USR-8e757599-164c-4d80-9888-bad2ee1e5881", {
       locale: "es-CO",
     });
 
@@ -61,6 +62,7 @@ export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickPro
         excludedPaymentMethods: [], // ✅ No excluir ningún método de pago
         excludedPaymentTypes: [],   // ✅ No excluir ningún tipo de pago
       },
+      defaultPaymentMethod: "credit_card", // ✅ Método de pago por defecto
       customization: {
         visual: {
           style: {
