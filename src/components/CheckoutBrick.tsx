@@ -1,4 +1,3 @@
-// components/CheckoutBrick.tsx
 import { useEffect, useRef } from "react";
 
 declare global {
@@ -24,16 +23,20 @@ const CheckoutBrick = ({ preferenceId }: Props) => {
 
       const bricksBuilder = mp.bricks();
       if (brickRef.current) {
-        await bricksBuilder.create("checkout", "brick_container", {
+        await bricksBuilder.create("wallet", "brick_container", {
           initialization: {
             preferenceId,
           },
-          callbacks: {
-            onReady: () => console.log("Checkout Brick listo"),
-            onError: (error: any) => console.error("Error en Brick:", error),
-            onSubmit: async ({ selectedPaymentMethod, formData }: any) => {
-              console.log("Enviando pago:", selectedPaymentMethod, formData);
+          customization: {
+            visual: {
+              style: {
+                theme: "default", // o "dark", "bootstrap"
+              },
             },
+          },
+          callbacks: {
+            onReady: () => console.log("Brick listo"),
+            onError: (error: any) => console.error("Error:", error),
           },
         });
       }
