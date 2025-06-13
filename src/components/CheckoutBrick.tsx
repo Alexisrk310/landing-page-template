@@ -1,86 +1,37 @@
+// components/CheckoutBrick.tsx
 import { useEffect } from "react";
 
 declare global {
   interface Window {
-    MercadoPago: new (
-      publicKey: string,
-      options?: { locale?: string }
-    ) => MercadoPagoInstance;
+    MercadoPago: any;
   }
 }
 
-interface CheckoutBrickProps {
+interface Props {
   preferenceId: string;
 }
 
-interface MercadoPagoInstance {
-  bricks(): {
-    create(
-      type: "payment",
-      container: string,
-      settings: {
-        initialization: {
-          preferenceId: string;
-        };
-        customization?: {
-          visual?: {
-            style?: {
-              theme?: string;
-            };
-          };
-        };
-        paymentMethods?: {
-          excludedPaymentMethods?: any[];
-          excludedPaymentTypes?: any[];
-          defaultPaymentMethod?: string;
-        };
-        callbacks?: {
-          onReady?: () => void;
-          onSubmit?: (params: { formData: any }) => void;
-          onError?: (error: any) => void;
-        };
-      }
-    ): Promise<void>;
-  };
-}
-
-export default function CheckoutBrick({ preferenceId }: CheckoutBrickProps) {
+const CheckoutBrick = ({ preferenceId }: Props) => {
   useEffect(() => {
-    const mp = new window.MercadoPago(
-      "APP_USR-8e757599-164c-4d80-9888-bad2ee1e5881",
-      {
+    if (preferenceId && window.MercadoPago) {
+      const mp = new window.MercadoPago("APP_USR-8e757599-164c-4d80-9888-bad2ee1e5881", {
         locale: "es-CO",
-      }
-    );
+      });
 
-    mp.bricks().create("payment", "payment-container", {
-      initialization: {
-        preferenceId,
-      },
-      paymentMethods: {
-        excludedPaymentMethods: [],
-        excludedPaymentTypes: [],
-      },
-      customization: {
-        visual: {
-          style: {
-            theme: "default",
+      mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+          preferenceId,
+        },
+        customization: {
+          texts: {
+            valueProp: "smart_option",
           },
         },
-      },
-      callbacks: {
-        onReady: () => {
-          console.log("Brick listo");
-        },
-        onSubmit: ({ formData }) => {
-          console.log("Datos enviados:", formData);
-        },
-        onError: (error) => {
-          console.error("Error con el Brick:", error);
-        },
-      },
-    });
+      });
+    }
   }, [preferenceId]);
 
-  return <div id="payment-container" />;
-}
+  return <div id="wallet_container" />;
+};
+
+export default CheckoutBrick;

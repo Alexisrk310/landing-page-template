@@ -1,3 +1,4 @@
+// pages/cart.tsx
 import React, { useEffect, useState } from "react";
 import { Minus, Plus, XCircle } from "lucide-react";
 import CheckoutBrick from "@/components/CheckoutBrick";
@@ -153,11 +154,12 @@ const CartPage: React.FC = () => {
               <h2 className="text-xl font-bold text-center text-emerald-800 mb-4">
                 Completa tu pago
               </h2>
-              <CheckoutBrick preferenceId={preferenceId}  />
+              <CheckoutBrick preferenceId={preferenceId} />
             </div>
           )}
-
-          <div className="mt-10 text-center">
+        </div>
+      )}
+        <div className="mt-10 text-center">
             <p className="text-md font-medium mb-2 text-gray-700">Puedes pagar con:</p>
             <div className="flex flex-wrap justify-center items-center gap-4">
               <img src="/paymentMethods/mercado-pago-logo.jpg" alt="MercadoPago" className="h-15" />
@@ -167,9 +169,9 @@ const CartPage: React.FC = () => {
               <img src="/paymentMethods/pse-logo.png" alt="PSE" className="h-15" />
             </div>
           </div>
-        </div>
-      )}
+        
     </div>
+    
   );
 };
 
