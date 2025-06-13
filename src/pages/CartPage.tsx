@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Minus, Plus, XCircle } from "lucide-react";
-import CheckoutBrick from "@/components/CheckoutBrick";
 
 interface CartItem {
   category: string;
@@ -13,7 +12,6 @@ interface CartItem {
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isPaying, setIsPaying] = useState(false);
-  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("cart");
@@ -37,50 +35,38 @@ const CartPage: React.FC = () => {
     localStorage.setItem("cart", JSON.stringify(newItems));
   };
 
-  const clearCart = () => {
-    localStorage.removeItem("cart");
-    setCartItems([]);
-    setPreferenceId(null);
-  };
-
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
-  const handleCheckoutBricks = async () => {
-  setIsPaying(true);
-  try {
-    // Enviar al backend con los campos que Mercado Pago espera
-    const items = cartItems.map(item => ({
-      title: item.name,
-      quantity: item.quantity,
-      unit_price: item.price,
-      currency_id: "COP",
-    }));
+  const clearCart = () => {
+    localStorage.removeItem("cart");
+    setCartItems([]);
+  };
 
-    const response = await fetch(
-      "https://mercado-pago-backend-six.vercel.app/api/create-preference",
-      {
+  const handleCheckout = async () => {
+    setIsPaying(true);
+    try {
+      const response = await fetch("https://mercado-pago-backend-six.vercel.app/api/create-preference", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
-      }
-    );
+        body: JSON.stringify({ items: cartItems }),
+      });
 
-    const data = await response.json();
-    if (data.preference_id) {
-      setPreferenceId(data.preference_id);
-    } else {
-      alert("Error al crear la preferencia.");
+      const data = await response.json();
+      if (data.init_point) {
+        window.location.href = data.init_point;
+      } else {
+        alert("Error al crear la preferencia de pago.");
+        setIsPaying(false);
+      }
+    } catch (error) {
+      console.error("Error en checkout:", error);
+      alert("Hubo un problema al procesar el pago.");
+      setIsPaying(false);
     }
-  } catch (error) {
-    console.error("Error en checkout:", error);
-    alert("Hubo un problema al procesar el pago.");
-  } finally {
-    setIsPaying(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen text-gray-900 px-4 py-8 max-w-4xl mx-auto">
@@ -93,10 +79,8 @@ const CartPage: React.FC = () => {
       ) : (
         <div className="space-y-6">
           {cartItems.map((item, i) => (
-            <div
-              key={i}
-              className="relative border rounded-lg p-4 shadow-sm bg-white"
-            >
+            <div key={i} className="relative border rounded-lg p-4 shadow-sm bg-white">
+              {/* Botón para eliminar */}
               <button
                 onClick={() => removeItem(i)}
                 className="absolute top-2 right-2 text-red-500 hover:text-red-700"
@@ -136,7 +120,7 @@ const CartPage: React.FC = () => {
                     </button>
                   </div>
                   <p className="text-sm mt-2 text-gray-800 font-semibold">
-                    Subtotal: ${(item.price * item.quantity).toLocaleString()}
+                    Subtotal: ${ (item.price * item.quantity).toLocaleString() }
                   </p>
                 </div>
               </div>
@@ -147,19 +131,13 @@ const CartPage: React.FC = () => {
             <p className="text-xl font-bold text-emerald-700">
               Total: ${totalPrice.toLocaleString()}
             </p>
-
             <button
-              onClick={handleCheckoutBricks}
+              onClick={handleCheckout}
               disabled={isPaying}
               className="bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition disabled:opacity-50"
             >
-              {isPaying ? "Cargando..." : "Pagar con Mercado Pago"}
+              {isPaying ? "Redirigiendo..." : "Comprar ahora"}
             </button>
-
-            {preferenceId && (
-              <CheckoutBrick preferenceId={preferenceId} amount={totalPrice} />
-            )}
-
             <br />
             <button
               onClick={clearCart}
@@ -169,36 +147,15 @@ const CartPage: React.FC = () => {
             </button>
           </div>
 
+          {/* Métodos de pago */}
           <div className="mt-10 text-center">
-            <p className="text-md font-medium mb-2 text-gray-700">
-              Puedes pagar con:
-            </p>
+            <p className="text-md font-medium mb-2 text-gray-700">Puedes pagar con:</p>
             <div className="flex flex-wrap justify-center items-center gap-4">
-              <img
-                src="/paymentMethods/mercado-pago-logo.jpg"
-                alt="MercadoPago"
-                className="h-15"
-              />
-              <img
-                src="/paymentMethods/visa-logo.png"
-                alt="Visa"
-                className="h-15"
-              />
-              <img
-                src="/paymentMethods/mastercard-logo.png"
-                alt="MasterCard"
-                className="h-15"
-              />
-              <img
-                src="/paymentMethods/efecty-logo.svg"
-                alt="Efecty"
-                className="h-15"
-              />
-              <img
-                src="/paymentMethods/pse-logo.png"
-                alt="PSE"
-                className="h-15"
-              />
+              <img src="/paymentMethods/mercado-pago-logo.jpg" alt="MercadoPago" className="h-15" />
+              <img src="/paymentMethods/visa-logo.png" alt="Visa" className="h-15" />
+              <img src="/paymentMethods/mastercard-logo.png" alt="MasterCard" className="h-15" />
+              <img src="/paymentMethods/efecty-logo.svg" alt="Efecty" className="h-15" />
+              <img src="/paymentMethods/pse-logo.png" alt="PSE" className="h-15" />
             </div>
           </div>
         </div>
