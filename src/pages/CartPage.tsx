@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Minus, Plus, XCircle } from "lucide-react";
+import CheckoutBrick from "../components/CheckoutBrick"; // ajusta la ruta si es diferente
 
 interface CartItem {
   category: string;
@@ -12,6 +13,7 @@ interface CartItem {
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isPaying, setIsPaying] = useState(false);
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("cart");
@@ -35,15 +37,16 @@ const CartPage: React.FC = () => {
     localStorage.setItem("cart", JSON.stringify(newItems));
   };
 
+  const clearCart = () => {
+    localStorage.removeItem("cart");
+    setCartItems([]);
+    setPreferenceId(null); // limpiar el estado del Brick también
+  };
+
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-
-  const clearCart = () => {
-    localStorage.removeItem("cart");
-    setCartItems([]);
-  };
 
   const handleCheckout = async () => {
     setIsPaying(true);
@@ -55,15 +58,15 @@ const CartPage: React.FC = () => {
       });
 
       const data = await response.json();
-      if (data.init_point) {
-        window.location.href = data.init_point;
+      if (data.preferenceId) {
+        setPreferenceId(data.preferenceId);
       } else {
         alert("Error al crear la preferencia de pago.");
-        setIsPaying(false);
       }
     } catch (error) {
       console.error("Error en checkout:", error);
       alert("Hubo un problema al procesar el pago.");
+    } finally {
       setIsPaying(false);
     }
   };
@@ -80,11 +83,9 @@ const CartPage: React.FC = () => {
         <div className="space-y-6">
           {cartItems.map((item, i) => (
             <div key={i} className="relative border rounded-lg p-4 shadow-sm bg-white">
-              {/* Botón para eliminar */}
               <button
                 onClick={() => removeItem(i)}
                 className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                aria-label="Eliminar producto"
               >
                 <XCircle size={24} />
               </button>
@@ -120,7 +121,7 @@ const CartPage: React.FC = () => {
                     </button>
                   </div>
                   <p className="text-sm mt-2 text-gray-800 font-semibold">
-                    Subtotal: ${ (item.price * item.quantity).toLocaleString() }
+                    Subtotal: ${(item.price * item.quantity).toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -136,7 +137,7 @@ const CartPage: React.FC = () => {
               disabled={isPaying}
               className="bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition disabled:opacity-50"
             >
-              {isPaying ? "Redirigiendo..." : "Comprar ahora"}
+              {isPaying ? "Cargando pago..." : "Comprar ahora"}
             </button>
             <br />
             <button
@@ -147,7 +148,15 @@ const CartPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Métodos de pago */}
+          {preferenceId && (
+            <div className="mt-10 p-4 bg-gray-100 rounded-lg border">
+              <h2 className="text-xl font-bold text-center text-emerald-800 mb-4">
+                Completa tu pago
+              </h2>
+              <CheckoutBrick preferenceId={preferenceId} />
+            </div>
+          )}
+
           <div className="mt-10 text-center">
             <p className="text-md font-medium mb-2 text-gray-700">Puedes pagar con:</p>
             <div className="flex flex-wrap justify-center items-center gap-4">
