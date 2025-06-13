@@ -23,10 +23,6 @@ interface MercadoPagoInstance {
         initialization: {
           preferenceId: string;
           amount: number;
-          paymentMethods: {
-            excludedPaymentTypes: string[];     // <- importante
-            excludedPaymentMethods: string[];   // <- importante
-          };
         };
         customization?: {
           visual?: {
@@ -34,6 +30,11 @@ interface MercadoPagoInstance {
               theme?: string;
             };
           };
+        };
+        paymentMethods?: {
+          excludedPaymentMethods?: any[];
+          excludedPaymentTypes?: any[];
+          defaultPaymentMethod?: string;
         };
         callbacks?: {
           onReady?: () => void;
@@ -47,11 +48,6 @@ interface MercadoPagoInstance {
 
 export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickProps) {
   useEffect(() => {
-    if (!preferenceId || amount <= 0) {
-      console.warn("Faltan datos necesarios para inicializar el Brick.");
-      return;
-    }
-
     const mp = new window.MercadoPago("APP_USR-02fd49e6-2f7a-4c81-a551-59408b86eefe", {
       locale: "es-CO",
     });
@@ -60,10 +56,10 @@ export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickPro
       initialization: {
         preferenceId,
         amount,
-        paymentMethods: {
-          excludedPaymentTypes: [],    // Se aceptan todos los tipos (tarjeta, efectivo, etc.)
-          excludedPaymentMethods: [],  // Se aceptan todas las marcas (Visa, Master, etc.)
-        },
+      },
+      paymentMethods: {
+        excludedPaymentMethods: [], // ✅ No excluir ningún método de pago
+        excludedPaymentTypes: [],   // ✅ No excluir ningún tipo de pago
       },
       customization: {
         visual: {
