@@ -41,7 +41,7 @@ interface MercadoPagoInstance {
 
 export default function CheckoutBrick({ preferenceId }: CheckoutBrickProps) {
   useEffect(() => {
-    const mp = new window.MercadoPago("APP_USR-2454529300914554-061122-d1118844530126f91e8691df1ab19bf2-1252306978", {
+    const mp = new window.MercadoPago("APP_USR-02fd49e6-2f7a-4c81-a551-59408b86eefe", {
       locale: "es-CO", // cambia según tu país
     });
 
