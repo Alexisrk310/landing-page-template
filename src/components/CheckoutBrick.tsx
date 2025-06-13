@@ -1,5 +1,5 @@
 // components/CheckoutBrick.tsx
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -12,26 +12,37 @@ interface Props {
 }
 
 const CheckoutBrick = ({ preferenceId }: Props) => {
+  const brickRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (preferenceId && window.MercadoPago) {
+    const initializeBrick = async () => {
+      if (!window.MercadoPago) return;
+
       const mp = new window.MercadoPago("APP_USR-8e757599-164c-4d80-9888-bad2ee1e5881", {
         locale: "es-CO",
       });
 
-      mp.bricks().create("wallet", "wallet_container", {
-        initialization: {
-          preferenceId,
-        },
-        customization: {
-          texts: {
-            valueProp: "smart_option",
+      const bricksBuilder = mp.bricks();
+      if (brickRef.current) {
+        await bricksBuilder.create("checkout", "brick_container", {
+          initialization: {
+            preferenceId,
           },
-        },
-      });
-    }
+          callbacks: {
+            onReady: () => console.log("Checkout Brick listo"),
+            onError: (error: any) => console.error("Error en Brick:", error),
+            onSubmit: async ({ selectedPaymentMethod, formData }: any) => {
+              console.log("Enviando pago:", selectedPaymentMethod, formData);
+            },
+          },
+        });
+      }
+    };
+
+    initializeBrick();
   }, [preferenceId]);
 
-  return <div id="wallet_container" />;
+  return <div id="brick_container" ref={brickRef} className="min-h-[500px]" />;
 };
 
 export default CheckoutBrick;
