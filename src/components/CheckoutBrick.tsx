@@ -1,22 +1,74 @@
-// components/CheckoutBrick.tsx
-"use client"; // Si estás usando Next.js con App Router
+import { useEffect } from "react";
 
-import React from "react";
-import { Wallet } from "@mercadopago/sdk-react";
+declare global {
+  interface Window {
+    MercadoPago: new (
+      publicKey: string,
+      options?: { locale?: string }
+    ) => MercadoPagoInstance;
+  }
+}
 
 interface CheckoutBrickProps {
   preferenceId: string;
 }
 
-const CheckoutBrick: React.FC<CheckoutBrickProps> = ({ preferenceId }) => {
-  return (
-    <Wallet
-      initialization={{ preferenceId }}
-      customization={{
-        theme: "default", // o 'dark'
-      }}
-    />
-  );
-};
+interface MercadoPagoInstance {
+  bricks(): {
+    create(
+      type: "payment",
+      container: string,
+      settings: {
+        initialization: {
+          preferenceId: string;
+        };
+        customization?: {
+          visual?: {
+            style?: {
+              theme?: string;
+            };
+          };
+        };
+        callbacks?: {
+          onReady?: () => void;
+          onSubmit?: (params: { formData: any }) => void;
+          onError?: (error: any) => void;
+        };
+      }
+    ): Promise<void>;
+  };
+}
 
-export default CheckoutBrick;
+export default function CheckoutBrick({ preferenceId }: CheckoutBrickProps) {
+  useEffect(() => {
+    const mp = new window.MercadoPago("APP_USR-8e757599-164c-4d80-9888-bad2ee1e5881", {
+      locale: "es-CO", // cambia según tu país
+    });
+
+    mp.bricks().create("payment", "payment-container", {
+      initialization: {
+        preferenceId,
+      },
+      customization: {
+        visual: {
+          style: {
+            theme: "default", // o "dark", "flat", etc.
+          },
+        },
+      },
+      callbacks: {
+        onReady: () => {
+          console.log("Brick listo");
+        },
+        onSubmit: ({ formData }) => {
+          console.log("Datos enviados:", formData);
+        },
+        onError: (error) => {
+          console.error("Error con el Brick:", error);
+        },
+      },
+    });
+  }, [preferenceId]);
+
+  return <div id="payment-container" />;
+}
