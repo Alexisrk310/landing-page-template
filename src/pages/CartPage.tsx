@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Minus, Plus, XCircle } from "lucide-react";
-import CheckoutBrick from "../components/CheckoutBrick"; // ajusta la ruta si es diferente
+import CheckoutBrick from "@/components/CheckoutBrick";
 
 interface CartItem {
   category: string;
@@ -40,7 +40,7 @@ const CartPage: React.FC = () => {
   const clearCart = () => {
     localStorage.removeItem("cart");
     setCartItems([]);
-    setPreferenceId(null); // limpiar el estado del Brick también
+    setPreferenceId(null);
   };
 
   const totalPrice = cartItems.reduce(
@@ -153,7 +153,7 @@ const CartPage: React.FC = () => {
               <h2 className="text-xl font-bold text-center text-emerald-800 mb-4">
                 Completa tu pago
               </h2>
-              <CheckoutBrick preferenceId={preferenceId} />
+              <CheckoutBrick preferenceId={preferenceId} amount={totalPrice} />
             </div>
           )}
 

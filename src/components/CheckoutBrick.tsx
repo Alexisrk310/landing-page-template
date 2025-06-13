@@ -11,6 +11,7 @@ declare global {
 
 interface CheckoutBrickProps {
   preferenceId: string;
+  amount: number;
 }
 
 interface MercadoPagoInstance {
@@ -21,6 +22,7 @@ interface MercadoPagoInstance {
       settings: {
         initialization: {
           preferenceId: string;
+          amount: number;
         };
         customization?: {
           visual?: {
@@ -39,20 +41,21 @@ interface MercadoPagoInstance {
   };
 }
 
-export default function CheckoutBrick({ preferenceId }: CheckoutBrickProps) {
+export default function CheckoutBrick({ preferenceId, amount }: CheckoutBrickProps) {
   useEffect(() => {
     const mp = new window.MercadoPago("APP_USR-02fd49e6-2f7a-4c81-a551-59408b86eefe", {
-      locale: "es-CO", // cambia según tu país
+      locale: "es-CO",
     });
 
     mp.bricks().create("payment", "payment-container", {
       initialization: {
         preferenceId,
+        amount,
       },
       customization: {
         visual: {
           style: {
-            theme: "default", // o "dark", "flat", etc.
+            theme: "default",
           },
         },
       },
@@ -68,7 +71,7 @@ export default function CheckoutBrick({ preferenceId }: CheckoutBrickProps) {
         },
       },
     });
-  }, [preferenceId]);
+  }, [preferenceId, amount]);
 
   return <div id="payment-container" />;
 }
