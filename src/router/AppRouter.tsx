@@ -23,9 +23,9 @@ function AppRouter() {
 				<Route path="/galeria" element={<GalleryPage />} />
 				<Route path="/contacto" element={<ContactPage />} />
 				<Route path="/cart" element={<CartPage />} />
-				<Route path="/payment/success" element={<PaymentSuccess />} />
-				<Route path="/payment/failure" element={<FailurePage />} />
-				<Route path="/payment/pending" element={<PendingPage />} />
+				<Route path="/payments/success" element={<PaymentSuccess />} />
+				<Route path="/payments/failure" element={<FailurePage />} />
+				<Route path="/payments/pending" element={<PendingPage />} />
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 			<Footer />
