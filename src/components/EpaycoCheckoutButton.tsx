@@ -49,7 +49,7 @@ const EpaycoCheckoutButton: React.FC<EpaycoCheckoutButtonProps> = ({
 		); // redirige al cliente
 		script.setAttribute(
 			'data-epayco-confirmation',
-			'https://5a9719cb168e.ngrok-free.app/api/orders/webhook'
+			'https://731dbc3baea8.ngrok-free.app/api/orders/webhook'
 		); // tu backend recibe confirmación
 
 		// 📌 Datos extra que viajan a tu backend vía webhook

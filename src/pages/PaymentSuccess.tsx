@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
 		const refPayco = query.get('x_ref_payco');
 
 		if (refPayco) {
-			fetch(`https://5a9719cb168e.ngrok-free.app/api/orders/${refPayco}`)
+			fetch(`https://731dbc3baea8.ngrok-free.app/api/orders/${refPayco}`)
 				.then((res) => {
 					if (!res.ok) throw new Error('No se pudo verificar el pago');
 					return res.json();

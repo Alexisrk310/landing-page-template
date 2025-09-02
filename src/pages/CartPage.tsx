@@ -171,7 +171,7 @@ const CartPage: React.FC = () => {
 
 		try {
 			const res = await fetch(
-				'https://5a9719cb168e.ngrok-free.app/api/orders',
+				'https://731dbc3baea8.ngrok-free.app/api/orders',
 				{
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
