@@ -45,7 +45,7 @@ const EpaycoCheckoutButton: React.FC<EpaycoCheckoutButtonProps> = ({
 		// 📌 URLs de retorno y webhook
 		script.setAttribute(
 			'data-epayco-response',
-			'https://landing-page-template-opal.vercel.app/payments/success'
+			'https://rafaexpress.netlify.app/payments/success'
 		); // redirige al cliente
 		script.setAttribute(
 			'data-epayco-confirmation',
